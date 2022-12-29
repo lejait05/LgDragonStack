@@ -13,9 +13,7 @@ class Generation {
     calculateExpiration() {
         const expirationPeriod = Math.floor(Math.random() * (refreshRate / 2));
 
-        const msUntilExpiration = Math.random() < 0.5 ?
-            refreshRate - expirationPeriod :
-            refreshRate + expirationPeriod;
+        const msUntilExpiration = Math.random() < 0.5 ? refreshRate - expirationPeriod : refreshRate + expirationPeriod;
 
         return new Date(Date.now() + msUntilExpiration);
     }
@@ -26,7 +24,6 @@ class Generation {
         }
         return new Dragon({generationId: this.generationId});
     }
-
 }
 
 module.exports = Generation;

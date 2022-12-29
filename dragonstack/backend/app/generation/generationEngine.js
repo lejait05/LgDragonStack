@@ -1,7 +1,6 @@
 const Generation = require('./index');
 const GenerationTable = require('./table');
 
-
 class GenerationEngine{
     constructor() {
         this.generation= null;

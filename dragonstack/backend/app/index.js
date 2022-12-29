@@ -15,16 +15,14 @@ app.use((err, req, res, next) => {
 
     res.status(statusCode).json({
     type: 'error', message: err.message
-})
+    })
 });
 
 
 engine.start();
 
 
-
 module.exports = app;
-
 
 // setTimeout(()=>{
 //     engine.stop();

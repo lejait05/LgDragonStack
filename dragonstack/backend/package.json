@@ -4,8 +4,8 @@
   "description": "",
   "main": "app/index.js",
   "scripts": {
-    "start": "../dragonstack/backend/node_modules/.bin/node ./bin/server",
-    "dev": "../dragonstack/backend/node_modules/.bin/nodemon ./bin/server",
+    "start": "node ./bin/server",
+    "dev": "nodemon ./bin/server",
     "configure-dev": "npm run configure && npm run dev",
     "configure": "./bin/configure_db.sh"
   },
