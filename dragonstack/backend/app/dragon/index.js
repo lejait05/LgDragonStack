@@ -1,9 +1,13 @@
 const TRAITS = require('../../data/traits');
 
 const DEFAULT_PROPERTIES = {
-    dragonId: undefined, nickname: 'unnamed', generationId: undefined, get birthdate() {
+    dragonId: undefined,
+    nickname: 'unnamed',
+    generationId: undefined,
+    get birthdate() {
         return new Date()
-    }, get randomTraits() {
+    },
+    get randomTraits() {
         const traits = [];
         TRAITS.forEach(TRAIT => {
             const traitType = TRAIT.type;

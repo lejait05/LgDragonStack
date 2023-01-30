@@ -35,7 +35,7 @@ class DragonTable {
         });
     }
 }
-//debugging code
+// debugging code
 // DragonTable.getDragon({dragonId: 1})
 //     .then(dragon => console.log(dragon))
 //     .catch(error => console.error('error', error));
