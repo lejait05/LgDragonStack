@@ -1,0 +1,23 @@
+{
+  "scripts": {
+    "clean": "rm -rf dist .parcel-cache",
+    "start": "npm run clean && parcel src/index.html",
+    "dev": "npm run start"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "parcel": "^2.8.3",
+    "parcel-transformer-babel-set-preset-env-target": "^2.0.0-alpha.3.3",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "description": "",
+  "devDependencies": {
+    "@babel/core": "^7.20.12",
+    "@babel/plugin-proposal-class-properties": "^7.18.6",
+    "process": "^0.11.10"
+  }
+}
+

@@ -9,6 +9,7 @@
     "configure-dev": "npm run configure && npm run dev",
     "configure": "./bin/configure_db.sh"
   },
+
   "author": "",
   "license": "ISC",
   "devDependencies": {
