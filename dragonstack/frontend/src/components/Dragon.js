@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {Button} from 'react-bootstrap';
 import DragonAvitar from './DragonAvitar';
 
 const DEFAULT_DRAGON ={
@@ -22,13 +23,10 @@ const DEFAULT_DRAGON ={
             .catch(error => console.error('error', error));
     }
     render(){
-        const{generationId, dragonId, traits }= this.state.dragon;
         return(
             <div>
-                <span>G{generationId}. </span>
-                <span>I{dragonId}. </span>
-
-                {traits.map(trait =>trait.traitValue).join(', ') }
+                <Button onClick={this.fetchDragon }>New Dragon</Button>
+                <DragonAvitar dragon={this.state.dragon} />
             </div>
         )
     }

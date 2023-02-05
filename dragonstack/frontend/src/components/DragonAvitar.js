@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 
 class DragonAvitar extends Component {
     render(){
-        const{generationId, dragonId, traits }= this.state.dragon;
+        const{generationId, dragonId, traits }= this.props.dragon;
         return(
             <div>
                 <span>G{generationId}. </span>
