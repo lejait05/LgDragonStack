@@ -2933,24 +2933,31 @@ var _reactDom = require("react-dom");
 // import {Root} from "./Root";
 var _generation = require("./components/Generation");
 var _generationDefault = parcelHelpers.interopDefault(_generation);
+var _dragon = require("./components/Dragon");
+var _dragonDefault = parcelHelpers.interopDefault(_dragon);
 (0, _reactDom.render)(/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
     children: [
         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h2", {
             children: "Dragon Stack from React"
         }, void 0, false, {
             fileName: "src/index.js",
-            lineNumber: 7,
+            lineNumber: 8,
             columnNumber: 5
         }, undefined),
         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _generationDefault.default), {}, void 0, false, {
             fileName: "src/index.js",
-            lineNumber: 8,
+            lineNumber: 9,
             columnNumber: 3
+        }, undefined),
+        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _dragonDefault.default), {}, void 0, false, {
+            fileName: "src/index.js",
+            lineNumber: 10,
+            columnNumber: 9
         }, undefined)
     ]
 }, void 0, true, {
     fileName: "src/index.js",
-    lineNumber: 6,
+    lineNumber: 7,
     columnNumber: 8
 }, undefined), document.getElementById("root")); // const container = document.getElementById('root');
  //
@@ -2965,7 +2972,7 @@ var _generationDefault = parcelHelpers.interopDefault(_generation);
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","react-dom":"j6uA9","./components/Generation":"5dH5f","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"iTorj":[function(require,module,exports) {
+},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","react-dom":"j6uA9","./components/Generation":"5dH5f","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","./components/Dragon":"gYEdR"}],"iTorj":[function(require,module,exports) {
 "use strict";
 module.exports = require("ad5cfc11810205d4");
 
@@ -27166,23 +27173,38 @@ function _toPrimitive(input, hint) {
     }
     return (hint === "string" ? String : Number)(input);
 }
+const DEFAULT_GENERATION = {
+    generationId: "",
+    expiration: ""
+};
+const MINIMUM_DELAY = 3000;
 class Generation extends (0, _react.Component) {
     constructor(...args){
         super(...args);
         _defineProperty(this, "state", {
-            generation: {
-                generationId: 999,
-                expiration: "2020-05-01"
-            }
+            generation: DEFAULT_GENERATION
         });
+        _defineProperty(this, "timer", null);
         _defineProperty(this, "fetchGeneration", ()=>{
             fetch("http://localhost:3000/generation").then((response)=>response.json()).then((json)=>{
                 console.log("json", json);
+                this.setState({
+                    generation: json.generation
+                });
             }).catch((error)=>console.error("error", error));
+        });
+        _defineProperty(this, "fetchNextGeneration", ()=>{
+            this.fetchGeneration();
+            let delay = new Date(this.state.generation.expiration).getTime() - new Date().getTime();
+            if (delay < MINIMUM_DELAY) delay = MINIMUM_DELAY;
+            this.timer = setTimeout(()=>this.fetchNextGeneration(), delay);
         });
     }
     componentDidMount() {
-        this.fetchGeneration();
+        this.fetchNextGeneration();
+    }
+    componentWillUnmount() {
+        clearTimeout(this.timer);
     }
     render() {
         const { generation  } = this.state;
@@ -27196,20 +27218,20 @@ class Generation extends (0, _react.Component) {
                     ]
                 }, void 0, true, {
                     fileName: "src/components/Generation.js",
-                    lineNumber: 28,
+                    lineNumber: 45,
                     columnNumber: 17
                 }, this),
                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h4", {
                     children: new Date(generation.expiration).toString()
                 }, void 0, false, {
                     fileName: "src/components/Generation.js",
-                    lineNumber: 29,
+                    lineNumber: 46,
                     columnNumber: 17
                 }, this)
             ]
         }, void 0, true, {
             fileName: "src/components/Generation.js",
-            lineNumber: 27,
+            lineNumber: 44,
             columnNumber: 12
         }, this);
     }
@@ -27384,6 +27406,164 @@ function registerExportsForReactRefresh(module1) {
     }
 }
 
-},{"f02c3d6758d777c9":"786KC"}]},["1xC6H","jC2qd","8lqZg"], "8lqZg", "parcelRequire94c2")
+},{"f02c3d6758d777c9":"786KC"}],"gYEdR":[function(require,module,exports) {
+var $parcel$ReactRefreshHelpers$91c0 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+var prevRefreshReg = window.$RefreshReg$;
+var prevRefreshSig = window.$RefreshSig$;
+$parcel$ReactRefreshHelpers$91c0.prelude(module);
+
+try {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _jsxDevRuntime = require("react/jsx-dev-runtime");
+var _react = require("react");
+var _reactDefault = parcelHelpers.interopDefault(_react);
+var _dragonAvitar = require("./DragonAvitar");
+var _dragonAvitarDefault = parcelHelpers.interopDefault(_dragonAvitar);
+function _defineProperty(obj, key, value) {
+    key = _toPropertyKey(key);
+    if (key in obj) Object.defineProperty(obj, key, {
+        value: value,
+        enumerable: true,
+        configurable: true,
+        writable: true
+    });
+    else obj[key] = value;
+    return obj;
+}
+function _toPropertyKey(arg) {
+    var key = _toPrimitive(arg, "string");
+    return typeof key === "symbol" ? key : String(key);
+}
+function _toPrimitive(input, hint) {
+    if (typeof input !== "object" || input === null) return input;
+    var prim = input[Symbol.toPrimitive];
+    if (prim !== undefined) {
+        var res = prim.call(input, hint || "default");
+        if (typeof res !== "object") return res;
+        throw new TypeError("@@toPrimitive must return a primitive value.");
+    }
+    return (hint === "string" ? String : Number)(input);
+}
+const DEFAULT_DRAGON = {
+    dragonId: "",
+    generationId: "",
+    nickname: "",
+    birthdate: "",
+    traits: []
+};
+class Dragon extends (0, _react.Component) {
+    constructor(...args){
+        super(...args);
+        _defineProperty(this, "state", {
+            dragon: DEFAULT_DRAGON
+        });
+        _defineProperty(this, "fetchDragon", ()=>{
+            fetch("http://localhost:3000/dragon/new").then((response)=>response.json()).then((json)=>this.setState({
+                    dragon: json.dragon
+                })).catch((error)=>console.error("error", error));
+        });
+    }
+    componentDidMount() {
+        this.fetchDragon();
+    }
+    render() {
+        const { generationId , dragonId , traits  } = this.state.dragon;
+        return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+            children: [
+                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("span", {
+                    children: [
+                        "G",
+                        generationId,
+                        ". "
+                    ]
+                }, void 0, true, {
+                    fileName: "src/components/Dragon.js",
+                    lineNumber: 35,
+                    columnNumber: 17
+                }, this),
+                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("span", {
+                    children: [
+                        "I",
+                        dragonId,
+                        ". "
+                    ]
+                }, void 0, true, {
+                    fileName: "src/components/Dragon.js",
+                    lineNumber: 36,
+                    columnNumber: 17
+                }, this),
+                traits.map((trait)=>trait.traitValue).join(", ")
+            ]
+        }, void 0, true, {
+            fileName: "src/components/Dragon.js",
+            lineNumber: 34,
+            columnNumber: 12
+        }, this);
+    }
+}
+exports.default = Dragon;
+
+  $parcel$ReactRefreshHelpers$91c0.postlude(module);
+} finally {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","./DragonAvitar":"4Cb8D"}],"4Cb8D":[function(require,module,exports) {
+var $parcel$ReactRefreshHelpers$f466 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+var prevRefreshReg = window.$RefreshReg$;
+var prevRefreshSig = window.$RefreshSig$;
+$parcel$ReactRefreshHelpers$f466.prelude(module);
+
+try {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _jsxDevRuntime = require("react/jsx-dev-runtime");
+var _react = require("react");
+var _reactDefault = parcelHelpers.interopDefault(_react);
+class DragonAvitar extends (0, _react.Component) {
+    render() {
+        const { generationId , dragonId , traits  } = this.state.dragon;
+        return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+            children: [
+                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("span", {
+                    children: [
+                        "G",
+                        generationId,
+                        ". "
+                    ]
+                }, void 0, true, {
+                    fileName: "src/components/DragonAvitar.js",
+                    lineNumber: 10,
+                    columnNumber: 17
+                }, this),
+                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("span", {
+                    children: [
+                        "I",
+                        dragonId,
+                        ". "
+                    ]
+                }, void 0, true, {
+                    fileName: "src/components/DragonAvitar.js",
+                    lineNumber: 11,
+                    columnNumber: 17
+                }, this),
+                traits.map((trait)=>trait.traitValue).join(", ")
+            ]
+        }, void 0, true, {
+            fileName: "src/components/DragonAvitar.js",
+            lineNumber: 9,
+            columnNumber: 12
+        }, this);
+    }
+}
+exports.default = DragonAvitar;
+
+  $parcel$ReactRefreshHelpers$f466.postlude(module);
+} finally {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}]},["1xC6H","jC2qd","8lqZg"], "8lqZg", "parcelRequire94c2")
 
 //# sourceMappingURL=index.975ef6c8.js.map
