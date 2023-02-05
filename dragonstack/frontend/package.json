@@ -13,7 +13,8 @@
     "parcel-transformer-babel-set-preset-env-target": "^2.0.0-alpha.3.3",
     "react": "^18.2.0",
     "react-bootstrap": "^2.7.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "sass": "^1.58.0"
   },
   "description": "",
   "devDependencies": {
