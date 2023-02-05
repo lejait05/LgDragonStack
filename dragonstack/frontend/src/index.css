@@ -6,3 +6,17 @@ font-size: 20px;
     font-family: 'Tajawal', sans-serif;
 
 }
+.dragon-avatar-image-wrapper{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.dragon-avatar-image-pattern{
+    position: absolute;
+}
+.dragon-avatar-image-background{
+    position: absolute;
+}
+.dragon-avatar-image{
+    z-index: 0;
+}
