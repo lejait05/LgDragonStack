@@ -4,9 +4,11 @@ import {render} from 'react-dom';
 // import {Root} from "./Root";
 import Generation from './components/Generation';
 import Dragon from './components/Dragon';
+import './index.css';
+
 render(
     <div>
-    <h2>Dragon Stack from React</h2>
+    <h2>Dragon Stack </h2>
 <Generation/>
         <Dragon/>
     </div>,
