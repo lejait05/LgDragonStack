@@ -6,7 +6,6 @@ const DEFAULT_GENERATION = {generationId: '', expiration: ''};
 const MINIMUM_DELAY = 3000;
 
 class Generation extends Component{
-    state = {generation: DEFAULT_GENERATION };
     timer = null;
     componentDidMount() {
         this.fetchNextGeneration();
@@ -18,17 +17,15 @@ componentWillUnmount(){
         fetch('http://localhost:3000/generation')
             .then(response =>response.json())
             .then(json=>{
-                console.log('json', json)
-                this.setState({generation: json.generation});
-                this.props.dispatch(generationActionCreator(json.generation));
+                this.props.dispatchGeneration(json.generation);
             })
-
             .catch(error=>console.error('error', error));
     };
+
 fetchNextGeneration =() => {
 this.fetchGeneration();
 
-let delay = new Date(this.state.generation.expiration).getTime() -
+let delay = new Date(this.props.generation.expiration).getTime() -
 new Date().getTime();
 if (delay < MINIMUM_DELAY){
     delay = MINIMUM_DELAY;
@@ -52,5 +49,12 @@ const mapStateToProps = state=>{
     const generation = state.generation;
     return{generation};
 };
-const componentConnector = connect(mapStateToProps);
+const mapDispatchToProps = dispatch =>{
+    return {
+        dispatchGeneration: generation => dispatch(
+            generationActionCreator(generation)
+        )
+    }
+};
+const componentConnector = connect(mapStateToProps, mapDispatchToProps);
 export default componentConnector(Generation);
