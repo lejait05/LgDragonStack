@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import {generationActionCreator} from '../actions/generation';
 
 const DEFAULT_GENERATION = {generationId: '', expiration: ''};
 const MINIMUM_DELAY = 3000;
@@ -18,6 +20,7 @@ componentWillUnmount(){
             .then(json=>{
                 console.log('json', json)
                 this.setState({generation: json.generation});
+                this.props.dispatch(generationActionCreator(json.generation));
             })
 
             .catch(error=>console.error('error', error));
@@ -33,7 +36,9 @@ if (delay < MINIMUM_DELAY){
 this.timer = setTimeout(()=> this.fetchNextGeneration(), delay);
 }
 render(){
-        const {generation} = this.state;
+    console.log('this.props', this.props);
+
+        const {generation} = this.props;
 
         return(
             <div>
@@ -43,4 +48,9 @@ render(){
         )
     }
 }
-export default Generation;
+const mapStateToProps = state=>{
+    const generation = state.generation;
+    return{generation};
+};
+const componentConnector = connect(mapStateToProps);
+export default componentConnector(Generation);

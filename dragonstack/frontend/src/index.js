@@ -1,5 +1,6 @@
 import React from 'react';
 import { createStore} from 'redux';
+import {Provider} from 'react-redux';
 import {render} from 'react-dom';
 // import {createRoot} from 'react-dom/client';
 // import {Root} from "./Root";
@@ -23,11 +24,14 @@ fetch('http://localhost:3000/generation')
     });
 
 render(
-    <div>
-    <h2>Dragon Stack </h2>
-<Generation/>
+    <Provider store={store}>
+        <div>
+        <h2>Dragon Stack </h2>
+        <Generation/>
         <Dragon/>
-    </div>,
+    </div>
+    </Provider>
+   ,
     document.getElementById('root')
 );
 
