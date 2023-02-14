@@ -23,7 +23,7 @@ componentWillUnmount(){
     };
 
 fetchNextGeneration =() => {
-this.fetchGeneration();
+this.props.fetchGeneration();
 
 let delay = new Date(this.props.generation.expiration).getTime() -
 new Date().getTime();
@@ -53,8 +53,17 @@ const mapDispatchToProps = dispatch =>{
     return {
         dispatchGeneration: generation => dispatch(
             generationActionCreator(generation)
-        )
+        ),
+        fetchGeneration:()=>fetchGeneration(dispatch)
     }
+};
+const fetchGeneration = dispatch =>{
+    return fetch('http://localhost:3000/generation')
+        .then(response=> response.json())
+        .then(json=>{
+            dispatch(generationActionCreator(json.generation))
+        })
+    .catch(error=>console.error('error',error));
 };
 const componentConnector = connect(mapStateToProps, mapDispatchToProps);
 export default componentConnector(Generation);
