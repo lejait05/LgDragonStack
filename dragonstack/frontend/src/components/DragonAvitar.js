@@ -21,7 +21,7 @@ class DragonAvitar extends Component {
             const{ traitType, traitValue}=trait;
             dragonPropertyMap[traitType]= propertyMap[traitType][traitValue];
         });
-        const {backgroundColor, build, pattern, size}= dragonPropertyMap;
+        const {backgroundColor, build, pattern, size} = dragonPropertyMap;
 
         const sizing= {width: size, height: size};
         return(
