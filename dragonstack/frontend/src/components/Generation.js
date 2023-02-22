@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {generationActionCreator} from '../actions/generation';
+import {fetchGeneration} from '../actions/generation';
+import fetchStates from '../reducers/fetchStates';
 
 const DEFAULT_GENERATION = {generationId: '', expiration: ''};
 const MINIMUM_DELAY = 3000;
@@ -13,14 +14,7 @@ class Generation extends Component{
 componentWillUnmount(){
         clearTimeout(this.timer);
 }
-    fetchGeneration = ()=> {
-        fetch('http://localhost:3000/generation')
-            .then(response =>response.json())
-            .then(json=>{
-                this.props.dispatchGeneration(json.generation);
-            })
-            .catch(error=>console.error('error', error));
-    };
+
 
 fetchNextGeneration =() => {
 this.props.fetchGeneration();
@@ -34,8 +28,13 @@ this.timer = setTimeout(()=> this.fetchNextGeneration(), delay);
 }
 render(){
     console.log('this.props', this.props);
+    const {generation} = this.props;
 
-        const {generation} = this.props;
+
+
+    if(generation.status === fetchStates.error){
+        return <div>{generation.message}</div>;
+    }
 
         return(
             <div>
@@ -49,21 +48,16 @@ const mapStateToProps = state=>{
     const generation = state.generation;
     return{generation};
 };
-const mapDispatchToProps = dispatch =>{
-    return {
-        dispatchGeneration: generation => dispatch(
-            generationActionCreator(generation)
-        ),
-        fetchGeneration:()=>fetchGeneration(dispatch)
-    }
-};
-const fetchGeneration = dispatch =>{
-    return fetch('http://localhost:3000/generation')
-        .then(response=> response.json())
-        .then(json=>{
-            dispatch(generationActionCreator(json.generation))
-        })
-    .catch(error=>console.error('error',error));
-};
-const componentConnector = connect(mapStateToProps, mapDispatchToProps);
+
+
+// const mapDispatchToProps = dispatch =>{
+//     return {
+//         fetchGeneration:()=>fetchGeneration(dispatch)
+//     }
+// };
+
+const componentConnector = connect(
+    mapStateToProps,
+    {fetchGeneration}
+);
 export default componentConnector(Generation);
