@@ -6,6 +6,8 @@ dropdb -U dragon_ruler dragonstackdb
 
 createdb -U dragon_ruler dragonstackdb
 
+
+ psql -U dragon_ruler dragonstackdb < ./bin/sql/userAccount.sql
  psql -U dragon_ruler dragonstackdb < ./bin/sql/generation.sql
  psql -U dragon_ruler dragonstackdb < ./bin/sql/dragon.sql
 psql -U dragon_ruler dragonstackdb < ./bin/sql/trait.sql

@@ -1,14 +1,19 @@
 const express = require('express');
 const cors = require('cors');
+const bodyParser = require('body-parser');
 const GenerationEngine = require('./generation/generationEngine');
 const app = express();
 const engine = new GenerationEngine();
 const dragonRouter = require('./api/dragon');
 const generationRouter = require('./api/generation');
+const userAccountRouter = require('./api/userAccount');
 
 app.locals.engine = engine;
 
-app.use(cors({origin: 'http://localhost:1234'}));
+app.use(cors({origin: 'http://localhost:1234', credentials: true}));
+app.use(bodyParser.json());
+
+app.use('/userAccount', userAccountRouter);
 app.use('/dragon', dragonRouter);
 app.use('/generation',generationRouter);
 

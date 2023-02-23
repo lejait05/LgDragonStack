@@ -1,47 +1,36 @@
 import React from 'react';
 import {createStore, applyMiddleware} from 'redux';
+import {composeWithDevTools} from 'redux-devtools-extension';
 import {Provider} from 'react-redux';
 import {render} from 'react-dom';
 import thunk from 'redux-thunk';
-// import {createRoot} from 'react-dom/client';
-// import {Root} from "./Root";
 import Generation from './components/Generation';
 import Dragon from './components/Dragon';
 import rootReducer from './reducers';
-// import {generationActionCreator} from './actions/generation';
-
-
+import Root from './components/Root';
+import {configureStore} from '@reduxjs/toolkit';
 import './index.css';
 
 
+// export default function configureStore(preloadedState){
+//     // const middlewares = [loggerMiddleware, thunk]
+//     const middlewareEnhancer = applyMiddleware(thunk)
+//     const enhancers = [middlewareEnhancer, monitorReducersEnhancer]
+//     const composedEnhancers = composeWithDevTools(...enhancers)
+//
+//     const store = createStore(rootReducer, preloadedState, composedEnhancers)
+//     return store
+// }
 
-const store = createStore(rootReducer,window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
-    applyMiddleware(thunk)
-);
-// store.subscribe(()=>console.log('store state update', store.getState()));
-
-// fetch('http://localhost:3000/generation')
-//     .then(response =>response.json())
-//     .then(json=>{
-//         store.dispatch(generationActionCreator(json.generation))
-//     });
+const store = configureStore({
+    reducer: rootReducer
+});
 
 render(
     <Provider store={store}>
-        <div>
-        <h2>Dragon Stack </h2>
-        <Generation/>
-        <Dragon/>
-    </div>
-    </Provider>
-   ,
+        <Root/>
+    </Provider>,
     document.getElementById('root')
 );
 
-// const container = document.getElementById('root');
-//
-// const root = createRoot(container)
-// root.render(<Root />);
-// export function Root(){
-//     return <h2>Dragon Stack from React</h2>;
-// }
+
