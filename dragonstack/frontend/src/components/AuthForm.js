@@ -3,6 +3,7 @@ import {connect}from 'react-redux';
 import {Button, FormGroup, FormControl} from 'react-bootstrap';
 import {signup} from '../actions/userAccount';
 import DragonAvitar from "./DragonAvitar";
+import fetchStates from '../reducers/fetchStates';
 
 
 
@@ -24,6 +25,13 @@ class AuthForm extends Component{
     login = ()=>{
         console.log('this.state', this.state);
     }
+  get  Error(){
+        if (this.props.userAccount.status === fetchStates.error){
+            return <div>{this.props.userAccount.message}</div>
+        }
+    }
+
+
     render(){
         return(
             <div>
@@ -34,7 +42,8 @@ class AuthForm extends Component{
                 value={this.state.username}
                 placeholder='username'
                 onChange={this.updateUsername}/>
-
+            </FormGroup>
+                <FormGroup>
             <FormControl
             type='password'
             value={this.state.password}
@@ -46,9 +55,14 @@ class AuthForm extends Component{
             <span>or</span>
             <Button onClick={this.signup}>Sign Up</Button>
         </div>
+                <br />
+                {this.Error}
         </div>
         );
     }
 }
 
-export default  connect(null, {signup})(AuthForm);
+export default  connect(
+    ({userAccount})=>({userAccount}),
+    {signup})
+(AuthForm);

@@ -16,7 +16,7 @@ class userAccountTable{
     static getUserAccount({usernameHash}){
         return new Promise((resolve, reject)=>{
             pool.query(
-                `SELECT id, "passwordHash" FROM useraccount 
+                `SELECT id, "passwordHash" , "sessionId" FROM useraccount 
                           WHERE "usernameHash" = $1`,
                 [usernameHash],
                 (error, response)=>{
@@ -26,6 +26,18 @@ class userAccountTable{
 
             )
         });
+    }
+    static updateSessionId({sessionId, usernameHash}){
+        return new Promise((resolve, reject)=> {
+            pool.query(
+                'UPDATE userAccount SET "sessionId" =$1 WHERE "usernameHash" =$2',
+                [sessionId, usernameHash],
+                (error, response)=> {
+                    if (error) return reject(error);
+                    resolve();
+                }
+            )
+        })
     }
 }
 module.exports = userAccountTable;

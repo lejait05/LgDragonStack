@@ -20,3 +20,18 @@ import {BACKEND} from '../config';
             type: USERACCOUNT.FETCH_ERROR,
             message: error.message}));
 };
+export const logout = ()=> dispatch =>{
+    dispatch({type: USERACCOUNT.FETCH});
+    return fetch(`${BACKEND.ADDRESS}/userAccount/logout`,{
+        credentials: 'include'
+})
+.then(response => response.json())
+    .then(json=>{
+        if (json.type === 'error'){
+            dispatch({type: USERACCOUNT.FETCH_ERROR, message: json.message});
+        }else {
+            dispatch({type: USERACCOUNT.FETCH_LOGOUT_SUCCESS, ...json});
+        }
+    })
+    .catch(error=>dispatch({type: USERACCOUNT.FETCH_ERROR, message: error.message}));
+};
