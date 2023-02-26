@@ -1,11 +1,11 @@
 const pool = require('../../databasePool');
 
-class userAccountDragonTable {
-    static storeUserAccountDragon({userAccountId, dragonId}) {
+class accountDragonTable {
+    static storeAccountDragon({accountId, dragonId}) {
         return new Promise((resolve, reject) => {
             pool.query(
-                'INSERT INTO userAccountDragon("userAccountId", "dragonId") VALUES ($1, $2)',
-                [userAccountId, dragonId],
+                'INSERT INTO accountDragon("accountId", "dragonId") VALUES ($1, $2)',
+                [accountId, dragonId],
                 (error, response) => {
                     if (error) return reject(error);
 
@@ -15,19 +15,47 @@ class userAccountDragonTable {
         });
     }
 
-    static getUserAccountDragons({userAccountId}) {
+
+    static getAccountDragons({accountId}) {
         return new Promise((resolve, reject) => {
             pool.query(
-                'SELECT "dragonId" FROM useraccountdragon WHERE "userAccountId" =$1',
-                [userAccountId],
+                'SELECT "dragonId" FROM accountdragon WHERE "accountId" =$1',
+                [accountId],
                 (error, response) => {
                     if (error) return reject(error);
 
-                    resolve({userAccountDragons: response.rows});
+                    resolve({accountDragons: response.rows});
                 }
             )
         })
     }
 }
-
-module.exports = userAccountDragonTable;
+// static getDragonAccount({ dragonId }) {
+//     return new Promise((resolve, reject) => {
+//         pool.query(
+//             'SELECT "accountId" FROM accountDragon WHERE "dragonId" = $1',
+//             [dragonId],
+//             (error, response) => {
+//                 if (error) return reject(error);
+//
+//                 resolve({ accountId: response.rows[0].accountId });
+//             }
+//         )
+//     });
+// };
+//
+// static updateDragonAccount({ dragonId, accountId }) {
+//     return new Promise((resolve, reject) => {
+//         pool.query(
+//             'UPDATE accountDragon SET "accountId" = $1 WHERE "dragonId" = $2',
+//             [accountId, dragonId],
+//             (error, response) => {
+//                 if (error) return reject(error);
+//
+//                 resolve();
+//             }
+//         )
+//     });
+// }
+// }
+module.exports = accountDragonTable;

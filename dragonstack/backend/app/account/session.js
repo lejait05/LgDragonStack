@@ -1,15 +1,14 @@
-import { nanoid } from 'nanoid';
-
+const uuid = require('uuid');
 const {hash} = require('./helper');
+
 
 const SEPARATOR = '|';
 
 class Session {
     constructor({username}){
         this.username = username;
-        this.id = nanoid();
+        this.id = uuid;
     }
-
 
   static  userAccountData({username, id}){
         return `${username}${SEPARATOR}${id}`;

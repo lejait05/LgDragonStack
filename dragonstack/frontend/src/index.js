@@ -11,7 +11,7 @@ import rootReducer from './reducers';
 import Root from './components/Root';
 
 import {configureStore} from '@reduxjs/toolkit';
-import {fetchAuthenticated} from './actions/userAccount';
+import {fetchAuthenticated} from './actions/account';
 import './index.css';
 
 

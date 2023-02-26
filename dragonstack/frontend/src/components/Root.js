@@ -6,13 +6,13 @@ import AuthForm from './AuthForm';
 class Root extends Component{
     render(){
         return(
-            this.props.userAccount.loggedIn ? <Home /> : <AuthForm />
+            this.props.account.loggedIn ? <Home /> : <AuthForm />
         )
     }
 }
 
 export default connect(
-    ({userAccount})=>({userAccount}),
+    ({account})=>({account}),
     null)
 (Root);
 

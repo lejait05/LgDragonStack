@@ -1,9 +1,9 @@
 const {Router} = require('express');
-const userAccountTable = require('../userAccount/table');
-const userAccountDragonTable = require('../accountDragon/table');
-const Session = require('../userAccount/session')
-const {hash} = require('../userAccount/helper');
-const {setSession, authenticatedUserAccount} = require('./helper');
+const accountTable = require('../account/table');
+const accountDragonTable = require('../accountDragon/table');
+const Session = require('../account/session')
+const {hash} = require('../account/helper');
+const {setSession, authenticatedAccount} = require('./helper');
 const {getDragonWithTraits} = require('../dragon/helper');
 
 
@@ -15,10 +15,10 @@ router.post('/signup', (req, res, next) => {
     const usernameHash = hash(username);
     const passwordHash = hash(password);
 
-    userAccountTable.getUserAccount({usernameHash})
-        .then(({userAccount}) => {
-            if (!userAccount) {
-                return userAccountTable.storeUserAccount({usernameHash, passwordHash})
+    accountTable.getAccount({usernameHash})
+        .then(({account}) => {
+            if (!account) {
+                return accountTable.storeAccount({usernameHash, passwordHash})
             } else {
                 const error = new Error('This username has already been taken');
                 error.statusCode = 409;
@@ -36,10 +36,10 @@ router.post('/signup', (req, res, next) => {
 
 router.post('/login', (req, res, next) => {
     const {username, password} = req.body;
-    userAccountTable.getUserAccount({usernameHash: hash(username)})
-        .then(({userAccount}) => {
-            if (userAccount && userAccount.passwordHash === hash(password)) {
-                const {sessionId} = userAccount
+    accountTable.getAccount({usernameHash: hash(username)})
+        .then(({account}) => {
+            if (account && account.passwordHash === hash(password)) {
+                const {sessionId} = account
                 return setSession({username, res, sessionId})
             } else {
                 const error = new Error('Incorrect username/password');
@@ -54,7 +54,7 @@ router.post('/login', (req, res, next) => {
 
 router.get('/logout', (req, res, next) => {
     const {username} = Session.parse(req.cookies.sessionString);
-    userAccountTable.updateSessionId({
+    accountTable.updateSessionId({
         sessionId: null,
         usernameHash: hash(username)
     }).then(() => {
@@ -64,22 +64,22 @@ router.get('/logout', (req, res, next) => {
 });
 
 router.get('/authenticated', (req, res, next) => {
-    authenticatedUserAccount({sessionString: req.cookies.sessionString})
+    authenticatedAccount({sessionString: req.cookies.sessionString})
         .then(({authenticated}) => res.json({authenticated}))
         .catch(error => next(error));
 });
 
 router.get('/dragons', (req, res, next) => {
-    authenticatedUserAccount({sessionString: req.cookies.sessionString})
+    authenticatedAccount({sessionString: req.cookies.sessionString})
         .then(({userAccount}) => {
-            return userAccountTable.getUserAccountDragons({
-                userAccountId: userAccount.id
+            return accountTable.getAccountDragons({
+                accountId: account.id
             });
         })
-        .then(({userAccountDragons}) => {
+        .then(({accountDragons}) => {
             return Promise.all(
-                userAccountDragons.map(userAccountDragon => {
-                    return getDragonWithTraits({dragonId: userAccountDragon.dragonId});
+                accountDragons.map(accountDragon => {
+                    return getDragonWithTraits({dragonId: accountDragon.dragonId});
                 })
             );
         })
@@ -88,6 +88,12 @@ router.get('/dragons', (req, res, next) => {
         })
         .catch(error => next(error));
 });
-
+router.get('/info', (req, res, next) => {
+    authenticatedAccount({ sessionString: req.cookies.sessionString })
+        .then(({ account, username }) => {
+            res.json({ info: { balance: account.balance, username } });
+        })
+        .catch(error => next(error));
+});
 
 module.exports = router;

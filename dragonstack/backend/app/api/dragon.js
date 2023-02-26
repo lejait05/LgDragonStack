@@ -1,16 +1,19 @@
 const {Router} = require('express');
-
 const DragonTable = require('../dragon/table');
-const {authenticatedUserAccount} = require("./helper");
-const userAccountDragonTable = require("../accountDragon/table");
+const {authenticatedAccount} = require("./helper");
+const accountDragonTable = require("../accountDragon/table");
+const accountTable = require('../account/table');
+const Breeder = require('../dragon/breeder');
+const {getPublicDragons, getDragonWithTraits } = require('../dragon/helper');
+
 
 const router = new Router();
 
 router.get('/new', (req, res, next) => {
-    let userAccountId, dragon;
-    authenticatedUserAccount({sessionString: req.cookies.sessionString})
-        .then(({userAccount})=> {
-            userAccountId = userAccount.id;
+    let accountId, dragon;
+    authenticatedAccount({sessionString: req.cookies.sessionString})
+        .then(({account})=> {
+            accountId = account.id;
 
            dragon = req.app.locals.engine.generation.newDragon();
 
@@ -19,7 +22,7 @@ router.get('/new', (req, res, next) => {
         .then(({dragonId})=>{
             dragon.dragonId = dragonId;
 
-            return userAccountDragonTable.storeUserAccountDragon({userAccountId, dragonId});
+            return accountDragonTable.storeAccountDragon({accountId, dragonId});
         })
         .then(()=>res.json({dragon}))
         .catch(error=> next(error));

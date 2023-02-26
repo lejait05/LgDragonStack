@@ -1,6 +1,6 @@
-const Session = require("../userAccount/session");
-const userAccountTable = require('../userAccount/table');
-const {hash} = require('../userAccount/helper');
+const Session = require("../account/session");
+const accountTable = require('../account/table');
+const {hash} = require('../account/helper');
 
 
 const setSession = ({username, res, sessionId})=> {
@@ -9,13 +9,13 @@ const setSession = ({username, res, sessionId})=> {
         if (sessionId){
             sessionString = Session.sessionString({username, id: sessionId});
 
-            setSessionCookie({sessionString,res});
+            setSessionCookie({sessionString, res});
             resolve({message: 'session restored'});
         }else {
             session = new Session({username});
             sessionString = session.toString();
 
-            userAccountTable.updateSessionId({
+            accountTable.updateSessionId({
                 sessionId: session.id,
                 usernameHash: hash(username)
             })
@@ -33,25 +33,25 @@ const setSessionCookie = ({sessionString, res})=> {
         httpOnly: true
         // secure: true// use with https
     });
-}
+};
 
-const authenticatedUserAccount = ({sessionString})=>{
+const authenticatedAccount = ({sessionString})=>{
     return new Promise((resolve, reject)=> {
         if (!sessionString || !Session.verify(sessionString)){
             const error = new Error('Invalid session');
             error.statusCode = 400;
-            return reject (error);
+            return reject(error);
         }else {
             const {username, id} = Session.parse(sessionString);
 
-            userAccountTable.getUserAccount({usernameHash: hash(username)})
-                .then(({userAccount})=> {
-                    const authenticated = userAccount.sessionId === id;
-                    resolve({userAccount, authenticated});
+            accountTable.getAccount({usernameHash: hash(username)})
+                .then(({account})=> {
+                    const authenticated = account.sessionId === id;
+                    resolve({account, authenticated, username});
                 })
                 .catch(error=> reject(error));
         }
-    })
-}
+    });
+};
 
-module.exports = {setSession, authenticatedUserAccount};
+module.exports = {setSession, authenticatedAccount};

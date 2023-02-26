@@ -4,8 +4,8 @@ import {Button} from 'react-bootstrap';
 // import {Link} from 'react-router-dom';
 import Generation from './Generation';
 import Dragon from './Dragon';
-import userAccountInfo from './userAccountInfo';
-import {logout} from '../actions/userAccount';
+import accountInfo from './accountInfo';
+import {logout} from '../actions/account';
 
 
 class Home extends Component {
