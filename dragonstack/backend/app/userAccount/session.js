@@ -1,4 +1,5 @@
-const nanoid = require('nanoid');
+import { nanoid } from 'nanoid';
+
 const {hash} = require('./helper');
 
 const SEPARATOR = '|';
@@ -6,8 +7,9 @@ const SEPARATOR = '|';
 class Session {
     constructor({username}){
         this.username = username;
-        this.id = nanoid;
+        this.id = nanoid();
     }
+
 
   static  userAccountData({username, id}){
         return `${username}${SEPARATOR}${id}`;
@@ -37,5 +39,4 @@ class Session {
         return `${userAccountData}${SEPARATOR}${hash(userAccountData)}`;
     }
 }
-
 module.export = Session;

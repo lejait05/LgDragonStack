@@ -12,6 +12,8 @@ const DEFAULT_USERACCOUNT = {loggedIn: false};
                 return{...state, status: fetchStates.success, message: action.message, loggedIn: true};
          case USERACCOUNT.FETCH_LOGOUT_SUCCESS:
              return {...state, status: fetchStates.success, message: action.message, loggedIn: false};
+         case USERACCOUNT.FETCH_AUTHENTICATED_SUCCESS:
+             return {...state, status: fetchStates.success, message: action.message, loggedIn: action.authenticated};
          default:
      return state;
      }

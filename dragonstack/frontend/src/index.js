@@ -2,13 +2,16 @@ import React from 'react';
 import {createStore, applyMiddleware} from 'redux';
 import {composeWithDevTools} from 'redux-devtools-extension';
 import {Provider} from 'react-redux';
+// import {Router, Switch, Route} from 'react-router-dom';
 import {render} from 'react-dom';
 import thunk from 'redux-thunk';
 import Generation from './components/Generation';
 import Dragon from './components/Dragon';
 import rootReducer from './reducers';
 import Root from './components/Root';
+
 import {configureStore} from '@reduxjs/toolkit';
+import {fetchAuthenticated} from './actions/userAccount';
 import './index.css';
 
 
@@ -25,12 +28,15 @@ import './index.css';
 const store = configureStore({
     reducer: rootReducer
 });
+store.dispatch(fetchAuthenticated())
+    .then(()=>{
+        render(
+            <Provider store={store}>
+                <Root/>
+            </Provider>,
+            document.getElementById('root')
+        );
+    });
 
-render(
-    <Provider store={store}>
-        <Root/>
-    </Provider>,
-    document.getElementById('root')
-);
 
 

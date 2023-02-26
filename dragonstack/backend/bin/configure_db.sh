@@ -12,6 +12,7 @@ createdb -U dragon_ruler dragonstackdb
  psql -U dragon_ruler dragonstackdb < ./bin/sql/dragon.sql
 psql -U dragon_ruler dragonstackdb < ./bin/sql/trait.sql
 psql -U dragon_ruler dragonstackdb < ./bin/sql/dragonTrait.sql
+ psql -U dragon_ruler dragonstackdb < ./bin/sql/userAccountDragon.sql
 
 node ./bin/insertTraits.js
 
