@@ -1,6 +1,6 @@
 const {Router} = require('express');
-const accountTable = require('../account/table');
-const accountDragonTable = require('../accountDragon/table');
+const AccountTable = require('../account/table');
+const AccountDragonTable = require('../accountDragon/table');
 const Session = require('../account/session')
 const {hash} = require('../account/helper');
 const {setSession, authenticatedAccount} = require('./helper');
@@ -15,10 +15,10 @@ router.post('/signup', (req, res, next) => {
     const usernameHash = hash(username);
     const passwordHash = hash(password);
 
-    accountTable.getAccount({usernameHash})
+    AccountTable.getAccount({usernameHash})
         .then(({account}) => {
             if (!account) {
-                return accountTable.storeAccount({usernameHash, passwordHash})
+                return AccountTable.storeAccount({usernameHash, passwordHash})
             } else {
                 const error = new Error('This username has already been taken');
                 error.statusCode = 409;
@@ -28,15 +28,13 @@ router.post('/signup', (req, res, next) => {
         .then(() => {
             return setSession({username, res});
         })
-        .then(({message}) => {
-            res.json({message});
-        })
+        .then(({message}) => res.json({message}))
         .catch(error => next(error));
 });
 
 router.post('/login', (req, res, next) => {
     const {username, password} = req.body;
-    accountTable.getAccount({usernameHash: hash(username)})
+    AccountTable.getAccount({usernameHash: hash(username)})
         .then(({account}) => {
             if (account && account.passwordHash === hash(password)) {
                 const {sessionId} = account
@@ -54,7 +52,7 @@ router.post('/login', (req, res, next) => {
 
 router.get('/logout', (req, res, next) => {
     const {username} = Session.parse(req.cookies.sessionString);
-    accountTable.updateSessionId({
+    AccountTable.updateSessionId({
         sessionId: null,
         usernameHash: hash(username)
     }).then(() => {
@@ -71,8 +69,8 @@ router.get('/authenticated', (req, res, next) => {
 
 router.get('/dragons', (req, res, next) => {
     authenticatedAccount({sessionString: req.cookies.sessionString})
-        .then(({userAccount}) => {
-            return accountTable.getAccountDragons({
+        .then(({account}) => {
+            return AccountDragonTable.getAccountDragons({
                 accountId: account.id
             });
         })
@@ -89,9 +87,9 @@ router.get('/dragons', (req, res, next) => {
         .catch(error => next(error));
 });
 router.get('/info', (req, res, next) => {
-    authenticatedAccount({ sessionString: req.cookies.sessionString })
-        .then(({ account, username }) => {
-            res.json({ info: { balance: account.balance, username } });
+    authenticatedAccount({sessionString: req.cookies.sessionString})
+        .then(({account, username}) => {
+            res.json({info: {balance: account.balance, username}});
         })
         .catch(error => next(error));
 });

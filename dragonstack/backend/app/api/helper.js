@@ -1,5 +1,5 @@
 const Session = require("../account/session");
-const accountTable = require('../account/table');
+const AccountTable = require('../account/table');
 const {hash} = require('../account/helper');
 
 
@@ -15,7 +15,7 @@ const setSession = ({username, res, sessionId})=> {
             session = new Session({username});
             sessionString = session.toString();
 
-            accountTable.updateSessionId({
+            AccountTable.updateSessionId({
                 sessionId: session.id,
                 usernameHash: hash(username)
             })
@@ -44,7 +44,7 @@ const authenticatedAccount = ({sessionString})=>{
         }else {
             const {username, id} = Session.parse(sessionString);
 
-            accountTable.getAccount({usernameHash: hash(username)})
+            AccountTable.getAccount({usernameHash: hash(username)})
                 .then(({account})=> {
                     const authenticated = account.sessionId === id;
                     resolve({account, authenticated, username});

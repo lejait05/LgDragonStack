@@ -9,10 +9,11 @@ class Session {
         this.username = username;
         this.id = uuid;
     }
-
-  static  userAccountData({username, id}){
-        return `${username}${SEPARATOR}${id}`;
+    toString(){
+        const{username, id} = this;
+        return Session.sessionString({username, id});
     }
+
     static parse(sessionString){
         const sessionData = sessionString.split(SEPARATOR);
         return {
@@ -24,18 +25,17 @@ class Session {
 
     static verify(sessionString){
         const {username, id, sessionHash} = Session.parse(sessionString);
-        const userAccountData = Session.userAccountData({username, id});
-        return hash(userAccountData)=== sessionHash;
+        const accountData = Session.accountData({username, id});
+        return hash(accountData)=== sessionHash;
+    }
+    static  accountData({username, id}){
+        return `${username}${SEPARATOR}${id}`;
     }
 
-    toString(){
-        const{username, id} = this;
-        return Session.sessionString({username, id});
-    }
 
     static sessionString({username, id}){
-        const userAccountData = Session.userAccountData({username, id});
-        return `${userAccountData}${SEPARATOR}${hash(userAccountData)}`;
+        const accountData = Session.accountData({username, id});
+        return `${accountData}${SEPARATOR}${hash(accountData)}`;
     }
 }
 module.export = Session;

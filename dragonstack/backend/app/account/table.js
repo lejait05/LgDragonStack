@@ -1,6 +1,6 @@
 const pool = require('../../databasePool');
 
-class accountTable{
+class AccountTable{
     static storeAccount({usernameHash, passwordHash}){
         return new Promise((resolve, reject)=>{
             pool.query(
@@ -39,4 +39,4 @@ class accountTable{
         })
     }
 }
-module.exports = accountTable;
+module.exports = AccountTable;

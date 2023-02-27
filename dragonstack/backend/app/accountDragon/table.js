@@ -1,6 +1,6 @@
 const pool = require('../../databasePool');
 
-class accountDragonTable {
+class AccountDragonTable {
     static storeAccountDragon({accountId, dragonId}) {
         return new Promise((resolve, reject) => {
             pool.query(
@@ -19,7 +19,7 @@ class accountDragonTable {
     static getAccountDragons({accountId}) {
         return new Promise((resolve, reject) => {
             pool.query(
-                'SELECT "dragonId" FROM accountdragon WHERE "accountId" =$1',
+                'SELECT "dragonId" FROM accountDragon WHERE "accountId" =$1',
                 [accountId],
                 (error, response) => {
                     if (error) return reject(error);
@@ -58,4 +58,4 @@ class accountDragonTable {
 //     });
 // }
 // }
-module.exports = accountDragonTable;
+module.exports = AccountDragonTable;

@@ -1,8 +1,8 @@
 const {Router} = require('express');
 const DragonTable = require('../dragon/table');
 const {authenticatedAccount} = require("./helper");
-const accountDragonTable = require("../accountDragon/table");
-const accountTable = require('../account/table');
+const AccountDragonTable = require("../accountDragon/table");
+const AccountTable = require('../account/table');
 const Breeder = require('../dragon/breeder');
 const {getPublicDragons, getDragonWithTraits } = require('../dragon/helper');
 
@@ -22,7 +22,7 @@ router.get('/new', (req, res, next) => {
         .then(({dragonId})=>{
             dragon.dragonId = dragonId;
 
-            return accountDragonTable.storeAccountDragon({accountId, dragonId});
+            return AccountDragonTable.storeAccountDragon({accountId, dragonId});
         })
         .then(()=>res.json({dragon}))
         .catch(error=> next(error));

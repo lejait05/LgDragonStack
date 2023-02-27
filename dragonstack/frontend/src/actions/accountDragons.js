@@ -1,7 +1,7 @@
 import { ACCOUNT_DRAGONS} from "./types";
-import {fetchFromAccount} from "./Account";
+import {fetchFromAccount} from "./account";
 
-export const fetchUserAccountDragons = ()=> fetchFromAccount({
+export const fetchAccountDragons = ()=> fetchFromAccount({
     endpoint: 'dragons',
     options: {credentials: 'include'},
     FETCH_TYPE: ACCOUNT_DRAGONS.FETCH,

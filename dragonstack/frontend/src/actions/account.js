@@ -2,17 +2,17 @@ import {ACCOUNT} from './types';
 import {BACKEND} from '../config';
 
 export const fetchFromAccount = ({
-                                         endpoint,
-                                         options,
-                                         FETCH_TYPE,
-                                         ERROR_TYPE,
-                                         SUCCESS_TYPE
-                                     }) => dispatch => {
+                                     endpoint,
+                                     options,
+                                     FETCH_TYPE,
+                                     ERROR_TYPE,
+                                     SUCCESS_TYPE
+                                 }) => dispatch => {
     dispatch({type: ACCOUNT.FETCH});
 
-    return fetch(`${BACKEND.ADDRESS}/account/${endpoint}`, {
-        options
-    })
+    return fetch(`${BACKEND.ADDRESS}/account/${endpoint}`,
+        {options}
+    )
         .then(json => {
             if (json.type === 'error') {
                 dispatch({type: ERROR_TYPE, message: json.message});

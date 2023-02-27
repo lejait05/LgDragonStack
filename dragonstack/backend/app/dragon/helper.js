@@ -3,7 +3,9 @@ const DragonTable = require('./table');
 const Dragon = require('./index');
 
 const getDragonWithTraits = ({dragonId}) => {
-    return Promise.all([DragonTable.getDragon({dragonId}), new Promise((resolve, reject) => {
+    return Promise.all([
+        DragonTable.getDragon({dragonId}),
+        new Promise((resolve, reject) => {
         pool.query(`SELECT "traitType", "traitValue"
                     FROM trait
                     INNER JOIN dragonTrait ON trait.id = dragonTrait."traitId"
