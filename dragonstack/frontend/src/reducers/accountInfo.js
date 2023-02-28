@@ -1,5 +1,7 @@
 import {ACCOUNT_INFO} from "../actions/types";
 import fetchStates from "./fetchStates";
+
+
 const accountInfo = (state = {}, action) => {
     switch (action.type){
         case ACCOUNT_INFO.FETCH:

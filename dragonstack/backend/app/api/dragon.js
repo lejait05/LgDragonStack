@@ -4,7 +4,7 @@ const {authenticatedAccount} = require("./helper");
 const AccountDragonTable = require("../accountDragon/table");
 const AccountTable = require('../account/table');
 const Breeder = require('../dragon/breeder');
-const {getPublicDragons, getDragonWithTraits } = require('../dragon/helper');
+const {getPublicDragons, getDragonWithTraits} = require('../dragon/helper');
 
 
 const router = new Router();
@@ -12,20 +12,32 @@ const router = new Router();
 router.get('/new', (req, res, next) => {
     let accountId, dragon;
     authenticatedAccount({sessionString: req.cookies.sessionString})
-        .then(({account})=> {
+        .then(({account}) => {
             accountId = account.id;
 
-           dragon = req.app.locals.engine.generation.newDragon();
+            dragon = req.app.locals.engine.generation.newDragon();
 
-          return DragonTable.storeDragon(dragon);
+            return DragonTable.storeDragon(dragon);
         })
-        .then(({dragonId})=>{
+        .then(({dragonId}) => {
             dragon.dragonId = dragonId;
 
             return AccountDragonTable.storeAccountDragon({accountId, dragonId});
         })
-        .then(()=>res.json({dragon}))
-        .catch(error=> next(error));
+        .then(() => res.json({dragon}))
+        .catch(error => next(error));
+});
+
+router.put('/update', (req, res, next) => {
+    const {dragonId, nickname, isPublic, saleValue} = req.body;
+    DragonTable.updateDragon({dragonId, nickname, isPublic, saleValue})
+        .then(() => res.json({message: 'successfully updated dragon'}))
+        .catch(error => next(error));
+})
+router.get('/public-dragons', (req, res, next) => {
+    getPublicDragons()
+        .then(({dragons}) => res.json({dragons}))
+        .catch(error => next(error));
 });
 
 module.exports = router;
