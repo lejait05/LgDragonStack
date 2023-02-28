@@ -39,5 +39,53 @@ router.get('/public-dragons', (req, res, next) => {
         .then(({dragons}) => res.json({dragons}))
         .catch(error => next(error));
 });
+router.post('/buy', (req, res, next) => {
+    const {dragonId, saleValue} = req.body;
+    let buyerId;
 
+
+    DragonTable.getDragon({dragonId})
+        .then(dragon => {
+            if (dragon.saleValue !== saleValue) {
+                throw new Error('Sale value is not correct');
+            }
+            if (!dragon.isPublic) {
+                throw new Error('Dragon must be public')
+            }
+            return authenticatedAccount({sessionString: req.cookies.sessionString});
+        })
+        .then(({account, authenticated}) => {
+            if (!authenticated) {
+                throw new Error('Unauthenticated')
+            }
+            if (saleValue > account.balance) {
+                throw new Error('Sale value exceeds balance')
+            }
+            buyerId = account.id;
+            return AccountDragonTable.getDragonAccount({dragonId});
+        })
+        .then(({accountId}) => {
+            if (accountId === buyerId) {
+                throw new Error('Cannot buy your own dragon !');
+            }
+            const sellerId = accountId;
+
+            return Promise.all([
+                AccountTable.updateBalance({
+                    accountId: buyerId, value: -saleValue
+                }),
+                AccountTable.updateBalance({
+                    accountId: sellerId, value: saleValue
+                }),
+                AccountDragonTable.updateDragonAccount({
+                    dragonId, accountId: buyerId
+                }),
+                DragonTable.updateDragon({
+                    dragonId, isPublic: false
+                })
+            ])
+        })
+        .then(() => res.json({message: 'success!'}))
+        .catch(error => next(error));
+});
 module.exports = router;

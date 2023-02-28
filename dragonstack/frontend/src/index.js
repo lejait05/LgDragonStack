@@ -5,7 +5,7 @@ import {Provider} from 'react-redux';
 import {Router, Switch, Route, Redirect} from 'react-router-dom';
 import {render} from 'react-dom';
 import thunk from 'redux-thunk';
-import {createBrowserHistory} from 'history';
+import history from "./history";
 import Generation from './components/Generation';
 import Dragon from './components/Dragon';
 import rootReducer from './reducers';
@@ -28,7 +28,7 @@ import './index.css';
 //     const store = createStore(rootReducer, preloadedState, composedEnhancers)
 //     return store
 // }
-const history = createBrowserHistory();
+
 
 
 const store = configureStore({
