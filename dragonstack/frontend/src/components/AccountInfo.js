@@ -1,21 +1,41 @@
-import React, {Component} from 'react';
+import React, {Component, useState} from 'react';
 import {connect} from 'react-redux';
 import {fetchAccountInfo} from '../actions/accountInfo';
 
-class accountInfo extends Component{
-     componentDidMount() {
-         this.props.fetchAccountInfo();
-     }
-     render(){
-         return(
-             <div>
-                 <h3>Account Info</h3>
-                 <div>Username: {this.props.accountInfo.username}</div>
-                 <div>Balance: {this.props.accountInfo.balance}</div>
-             </div>
-         )
-     }
+
+
+function accountInfo(){
+  function  componentDidMount()
+    {
+       fetchAccountInfo();
+    }
+    return(
+        <div>
+            <h3>Account Info</h3>
+            <div>Username: {accountInfo.username}</div>
+            <div>Balance: {accountInfo.balance}</div>
+        </div>
+    )
+
 }
+
+
+
+
+// class accountInfo extends Component{
+//      componentDidMount() {
+//          this.props.fetchAccountInfo();
+//      }
+//      render(){
+//          return(
+//              <div>
+//                  <h3>Account Info</h3>
+//                  <div>Username: {this.props.accountInfo.username}</div>
+//                  <div>Balance: {this.props.accountInfo.balance}</div>
+//              </div>
+//          )
+//      }
+// }
 export default connect(
     ({accountInfo})=>({accountInfo}),
     {fetchAccountInfo}

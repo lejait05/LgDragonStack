@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, useState} from 'react';
 import {connect} from 'react-redux';
 import {Button} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
@@ -9,11 +9,16 @@ import {logout} from '../actions/account';
 
 // import AccountDragons from './AccountDragons'
 
-class Home extends Component {
-    render() {
+function Home(){
+
+// }
+
+// class Home extends Component {
+//     render() {
         return (
             <div>
-                <Button onClick={this.props.logout} className='logout-button'>
+                <Button onClick={logout} className='logout-button'>
+                {/*<Button onClick={this.props.logout} className='logout-button'>*/}
                     Log Out
                 </Button>
                 <h2>Dragon Stack </h2>
@@ -25,7 +30,7 @@ class Home extends Component {
                 <Link to='/public-dragons'>Public Dragons</Link>
             </div>
         );
-    }
+
 }
 
 export default connect(null, {logout})(Home);

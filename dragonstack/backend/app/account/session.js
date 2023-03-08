@@ -7,6 +7,7 @@ const SEPARATOR = '|';
 class Session {
     constructor({username}){
         this.username = username;
+        this.username = username;
         this.id = uuid;
     }
     toString(){

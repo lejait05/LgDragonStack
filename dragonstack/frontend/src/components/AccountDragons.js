@@ -1,21 +1,29 @@
-import React, {Component} from 'react';
+import React, {Component, useState} from 'react';
 import {connect} from 'react-redux';
 import {Link} from "react-router-dom";
 import {fetchAccountDragons} from '../actions/accountDragons';
 import AccountDragonRow from './AccountDragonRow';
+import accountDragons from "../reducers/accountDragons";
 
 
-class AccountDragons extends Component {
-    componentDidMount() {
-        this.props.fetchAccountDragons();
+function AccountDragons(){
+  function  componentDidMount() {
+       fetchAccountDragons();
     }
 
-    render() {
+
+// class AccountDragons extends Component {
+//     componentDidMount() {
+//         this.props.fetchAccountDragons();
+//     }
+
+    // render() {
         return (
             <div>
                 <h3>Account Dragons</h3>
                 {
-                    this.props.accountDragons.dragons.map(dragon => {
+                    accountDragons.dragons.map(dragon => {
+                    // this.props.accountDragons.dragons.map(dragon => {
                         return (
                             <div key={dragon.dragonId}>
                                 <AccountDragonRow dragon={dragon}/>
@@ -27,7 +35,7 @@ class AccountDragons extends Component {
                 <Link to='/'>Home</Link>
             </div>
         );
-    }
+
 }
 
 export default connect(

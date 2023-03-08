@@ -1,18 +1,27 @@
-import React, {Component} from 'react';
+import React, {Component, useState} from 'react';
 import {connect} from 'react-redux';
 import Home from './Home';
 import AuthForm from './AuthForm';
+import account from "../reducers/account";
 
-class Root extends Component{
-    render(){
-        return(
-            this.props.account.loggedIn ? <Home /> : <AuthForm />
-        )
-    }
+
+
+function Root(){
+    return(
+        account.loggedIn ? <Home/> : <AuthForm/>
+    )
+
 }
+// class Root extends Component{
+//     render(){
+//         return(
+//             this.props.account.loggedIn ? <Home /> : <AuthForm />
+//         )
+//     }
+// }
 
 export default connect(
     ({account})=>({account}),
-    null)
-(Root);
+    null
+)(Root);
 

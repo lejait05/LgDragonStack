@@ -1,12 +1,6 @@
 import {GENERATION} from './types';
 import {BACKEND} from "../config";
 
-// export const generationActionCreator =(payload)=>{
-//     return{
-//         type: GENERATION_ACTION_TYPE,
-//         generation: payload
-//     };
-// }
 export const fetchGeneration = ()=>dispatch =>{
     dispatch({type:GENERATION.FETCH});
     return fetch(`${BACKEND.ADDRESS}/generation`)

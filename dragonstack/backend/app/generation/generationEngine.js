@@ -3,6 +3,7 @@ const GenerationTable = require('./table');
 
 class GenerationEngine {
     constructor() {
+
         this.generation = null;
         this.timer = null;
     }

@@ -1,11 +1,21 @@
-import React, {Component} from "react";
+import React, {Component, useState} from "react";
 import {Button} from "react-bootstrap";
 import {connect} from "react-redux";
 import {BACKEND} from "../config";
-import history from "../history";
+// import useNavigate from 'react-router-dom';
+import navigate from "../navigate";
+import accountDragons from "./AccountDragons";
 
-class MatingOptions extends Component {
-    mate= ({matronDragonId, patronDragonId})=>()=>{
+
+// const navigate = navigate();
+
+
+function MatingOptions(){
+
+// }
+
+// class MatingOptions extends Component {
+  const  mate= ({matronDragonId, patronDragonId})=>()=>{
         fetch(`${BACKEND.ADDRESS}/dragon/mate`, {
             method: 'POST',
             credentials:'include',
@@ -15,24 +25,27 @@ class MatingOptions extends Component {
             .then(json=>{
                 alert(json.message)
                 if (json.type !== 'error'){
-                    history.push('/account-dragons');
+                    navigate("/account-dragons");
                 }
             })
             .catch(error=> alert(error.message));
     }
 
-    render(){
+    // render(){
         return(
             <div>
                 <h4> Pick one of your dragons to mate with:</h4>
                 {
-                    this.props.accountDragons.dragons.map(dragon=>{
+                    accountDragons.dragons.map(dragon=>{
+                    // this.props.accountDragons.dragons.map(dragon=>{
                         const {dragonId, generationId, nickname} = dragon;
                         return(
                             <span key={dragonId}>
                                 <Button onClick={
-                                    this.mate({
-                                        patronDragonId: this.props.patronDragonId,
+                                    mate({
+                                            patronDragonId: this.patronDragonId,
+                                    // this.mate({
+                                    //     patronDragonId: this.props.patronDragonId,
                                         matronDragonId: dragon.dragonId
                                     })
                                 }>
@@ -45,7 +58,7 @@ class MatingOptions extends Component {
                 }
             </div>
         )
-    }
+
 }
 
 export default connect(
