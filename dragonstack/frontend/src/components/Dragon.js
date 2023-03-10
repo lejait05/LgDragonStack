@@ -3,35 +3,22 @@ import {connect} from 'react-redux';
 import {Button} from 'react-bootstrap';
 import DragonAvitar from './DragonAvitar';
 import {fetchDragon} from '../actions/dragon';
-
-
-// const DEFAULT_DRAGON ={
-//     dragonId: '',
-//     generationId: '',
-//     nickname: '',
-//     birthdate: '',
-//     traits: []
-// };
+import fetchStates from "../reducers/fetchStates";
 
 
  class Dragon extends Component{
-    // state = { dragon: DEFAULT_DRAGON};
+     get DragonView(){
+         const {dragon} = this.props;
 
-    // componentDidMount() {
-    //     this.fetchDragon();
-    // }
-    //
-    //  fetchDragon = ()=>{
-    //     fetch('http://localhost:3000/dragon/new')
-    //         .then(response =>response.json())
-    //         .then(json => this.setState({dragon: json.dragon}))
-    //         .catch(error => console.error('error', error));
-    // }
-    render(){
+         if (dragon.status === fetchStates.error){return <span>{dragon.message}</span>}
+         return   <DragonAvitar dragon={dragon} />;
+     }
+     render(){
         return(
             <div>
                 <Button onClick={this.props.fetchDragon }>New Dragon</Button>
-                <DragonAvitar dragon={this.props.dragon} />
+                <br/>
+                {this.DragonView}
             </div>
         )
     }
