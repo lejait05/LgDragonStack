@@ -1,7 +1,7 @@
 const {Router} = require('express');
 const DragonTable = require('../dragon/table');
-const {authenticatedAccount} = require("./helper");
-const AccountDragonTable = require("../accountDragon/table");
+const {authenticatedAccount} = require('./helper');
+const AccountDragonTable = require('../accountDragon/table');
 const AccountTable = require('../account/table');
 const Breeder = require('../dragon/breeder');
 const {getPublicDragons, getDragonWithTraits} = require('../dragon/helper');
@@ -42,7 +42,6 @@ router.get('/public-dragons', (req, res, next) => {
 router.post('/buy', (req, res, next) => {
     const {dragonId, saleValue} = req.body;
     let buyerId;
-
 
     DragonTable.getDragon({dragonId})
         .then(dragon => {
@@ -89,17 +88,17 @@ router.post('/buy', (req, res, next) => {
         .catch(error => next(error));
 });
 
-router.post('/mate', (req,res, next)=>{
-    const {matronDragonId, patronDragonId}= req.body;
-    if (matronDragonId=== patronDragonId){
+router.post('/mate', (req, res, next) => {
+    const {matronDragonId, patronDragonId} = req.body;
+    if (matronDragonId === patronDragonId) {
         throw new Error('Cannot breed with the same dragon!');
     }
     let matronDragon, patronDragon, patronSireValue;
     let matronAccountId, patronAccountId;
 
     getDragonWithTraits({dragonId: patronDragonId})
-        .then(dragon=>{
-            if (!dragon.isPublic){
+        .then(dragon => {
+            if (!dragon.isPublic) {
                 throw new Error('Dragon must be public');
             }
             patronDragon = dragon;
@@ -107,39 +106,39 @@ router.post('/mate', (req,res, next)=>{
 
             return getDragonWithTraits({dragonId: matronDragonId})
         })
-        .then(dragon =>{
+        .then(dragon => {
             matronDragon = dragon;
             return authenticatedAccount({sessionString: req.cookies.sessionString});
         })
-        .then(({account, authenticated})=>{
-            if (!authenticated)throw new Error('Unauthenticated');
-            if (patronSireValue > account.balance){
+        .then(({account, authenticated}) => {
+            if (!authenticated) throw new Error('Unauthenticated');
+            if (patronSireValue > account.balance) {
                 throw new Error('Sire value exceeds balance');
             }
             matronAccountId = account.id;
             return AccountDragonTable.getDragonAccount({dragonId: patronDragonId});
         })
-        .then(({accountId})=>{
+        .then(({accountId}) => {
             patronAccountId = accountId;
-            if (matronAccountId === patronAccountId){
+            if (matronAccountId === patronAccountId) {
                 throw new Error('Cannot breed your own dragons!');
             }
             const dragon = Breeder.breedDragon({matron: matronDragon, patron: patronDragon});
             return DragonTable.storeDragon(dragon);
         })
-        .then(({dragonId})=>{
+        .then(({dragonId}) => {
             Promise.all([
                 AccountTable.updateBalance({
                     accountId: matronAccountId, value: -patronSireValue
                 }),
                 AccountTable.updateBalance({
-                    accountId:patronAccountId, value: patronSireValue
+                    accountId: patronAccountId, value: patronSireValue
                 }),
                 AccountDragonTable.storeAccountDragon({
                     dragonId, accountId: matronAccountId
                 })
-            ]).then(()=>res.json({message: 'success!'}))
-                .catch(error=> next(error));
+            ]).then(() => res.json({message: 'success!'}))
+                .catch(error => next(error));
         });
 });
 module.exports = router;

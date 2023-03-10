@@ -1,11 +1,9 @@
 import {GENERATION} from '../actions/types';
 import fetchStates from './fetchStates';
 
-
 const DEFAULT_GENERATION = {generationId: '', expiration: ''};
 
-
- const generationReducer = (state = DEFAULT_GENERATION, action)=>{
+const generationReducer = (state = DEFAULT_GENERATION, action)=>{
    switch (action.type){
        case GENERATION.FETCH:
            return {...state, status: fetchStates.fetching};

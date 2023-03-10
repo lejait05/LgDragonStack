@@ -14,7 +14,6 @@ class PublicDragons extends Component{
         return(
             <div>
                 <h3>Public Dragons</h3>
-
                 {
                     this.props.publicDragons.dragons.map(dragon=>{
                         return(

@@ -14,7 +14,7 @@ class PublicDragonRow extends Component{
         });
     }
     buy=()=>{
-        const {dragonId, saleValue} = this.props.dragon;
+        const {dragonId, saleValue} = this.props.dragon;//destructured
         fetch(`${BACKEND.ADDRESS}/dragon/buy`,{
             method:'POST',
             credentials:'include',

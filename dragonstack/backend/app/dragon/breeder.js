@@ -41,10 +41,10 @@ class Breeder{
         return randNum < matronTraitCharSum ? matronTrait : patronTrait ;
     }
     static charSum(string){
-        string.split('').reduce(
+    return string.split('').reduce(
             (sum, character)=> sum += character.charCodeAt(),
             0
         );
-    };
+    }
 }
 module.exports = Breeder;
