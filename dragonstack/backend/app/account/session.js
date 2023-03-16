@@ -1,4 +1,4 @@
-const uuid = require('uuid');
+const uuid = require('uuidv4');
 const {hash} = require('./helper');
 
 
@@ -26,7 +26,7 @@ class Session {
     static verify(sessionString){
         const {username, id, sessionHash} = Session.parse(sessionString);
         const accountData = Session.accountData({username, id});
-        return hash(accountData)=== sessionHash;
+        return hash(accountData) === sessionHash;
     }
     static  accountData({username, id}){
         return `${username}${SEPARATOR}${id}`;
