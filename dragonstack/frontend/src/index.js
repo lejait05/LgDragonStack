@@ -1,13 +1,8 @@
 import React from 'react';
-import {createRoot, render} from 'react-dom';
-import {createStore, applyMiddleware} from 'redux';
-import {composeWithDevTools} from 'redux-devtools-extension';
+import {render} from 'react-dom';
 import {Provider} from 'react-redux';
-import {Router, Route, Switch, redirect, Routes} from 'react-router-dom';
-import thunkMiddleware from 'redux-thunk';
+import {Router, Route,  Routes} from 'react-router-dom';
 import history from "./history";
-import Generation from './components/Generation';
-import Dragon from './components/Dragon';
 import rootReducer from './reducers';
 import Root from './components/Root';
 import AccountDragons from './components/AccountDragons';
@@ -15,8 +10,12 @@ import PublicDragons from './components/PublicDragons';
 import {configureStore} from '@reduxjs/toolkit';
 import {fetchAuthenticated} from './actions/account';
 import './index.css';
-import root from "./components/Root";
 import * as PropTypes from "prop-types";
+// import Generation from './components/Generation';
+// import Dragon from './components/Dragon';
+// import {createStore, applyMiddleware} from 'redux';
+// import {composeWithDevTools} from 'redux-devtools-extension';
+// import thunkMiddleware from 'redux-thunk';
 
 
 const store = configureStore({
