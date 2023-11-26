@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "devDependencies": {
     "nodemon": "^2.0.20",
-    "parcel": "^2.8.2",
+    "parcel": "^2.10.3",
     "redux-devtools-extension": "^2.13.9"
   },
   "dependencies": {
