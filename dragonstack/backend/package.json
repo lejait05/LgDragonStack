@@ -2,7 +2,6 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "",
-
   "scripts": {
     "start": "node ./bin/server",
     "dev": "nodemon ./bin/server",
@@ -12,7 +11,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "nodemon": "^2.0.22",
+    "nodemon": "^3.0.2",
     "parcel": "^2.10.3"
   },
   "dependencies": {
@@ -22,11 +21,11 @@
     "cors": "^2.8.5",
     "crypto-js": "^4.2.0",
     "express": "^4.18.2",
-    "nanoid": "^4.0.2",
-    "node": "^19.8.1",
+    "nanoid": "^5.0.4",
+    "node": "^21.2.0",
     "pg": "^8.11.3",
     "pg-pool": "^3.6.1",
-    "postgres-pool": "^6.0.8",
+    "postgres-pool": "^8.1.1",
     "save": "^2.9.0",
     "uuid": "^9.0.1"
   }

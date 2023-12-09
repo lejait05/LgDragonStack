@@ -2,7 +2,7 @@
   "name": "LgDragonStack",
   "version": "1.0.0",
   "devDependencies": {
-    "nodemon": "^2.0.20",
+    "nodemon": "^3.0.2",
     "parcel": "^2.10.3",
     "redux-devtools-extension": "^2.13.9"
   },

@@ -11,7 +11,7 @@ import PublicDragons from './components/PublicDragons';
 import {configureStore} from '@reduxjs/toolkit';
 import {fetchAuthenticated} from './actions/account';
 import './index.css';
-import {hydrateRoot} from "react-dom";
+import {hydrateRoot} from "react-dom/client";
 // import * as PropTypes from "prop-types";
 
 // import Generation from './components/Generation';
@@ -36,12 +36,11 @@ const AuthRoute = props => {
     return <Route path={path} element={element}/>
 }
 // const container = document.getElementById('root');
-// const root = createRoot(container);
+const root =   hydrateRoot(document.getElementById('root'));
 
 store.dispatch(fetchAuthenticated())
     .then(() => {
-        hydrateRoot(
-            document.getElementById('root'),
+      root.render(
             <Provider store={store}>
                 <Router history={history}>
                     <Switch>
