@@ -18,13 +18,13 @@ app.use(cookieParser());
 
 app.use('/account', accountRouter);
 app.use('/dragon', dragonRouter);
-app.use('/generation',generationRouter);
+app.use('/generation', generationRouter);
 
 app.use((err, req, res, next) => {
     const statusCode = err.statusCode || 500;
 
     res.status(statusCode).json({
-    type: 'error', message: err.message
+        type: 'error', message: err.message
     })
 });
 

@@ -5,34 +5,34 @@ import MatingOptions from "./MatingOptions";
 import {BACKEND} from "../config";
 import history from "../history";
 
-class PublicDragonRow extends Component{
-    state = { displayMatingOptions: false};
+class PublicDragonRow extends Component {
+    state = {displayMatingOptions: false};
 
-    toggleDisplayMatingOptions =()=>{
+    toggleDisplayMatingOptions = () => {
         this.setState({
             displayMatingOptions: !this.state.displayMatingOptions
         });
     }
-    buy=()=>{
+    buy = () => {
         const {dragonId, saleValue} = this.props.dragon;//destructured
-        fetch(`${BACKEND.ADDRESS}/dragon/buy`,{
-            method:'POST',
-            credentials:'include',
+        fetch(`${BACKEND.ADDRESS}/dragon/buy`, {
+            method: 'POST',
+            credentials: 'include',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({dragonId, saleValue})
-        }).then(response =>response.json())
-            .then(json=>{
+        }).then(response => response.json())
+            .then(json => {
                 alert(json.message);
 
                 if (json.type !== 'error') {
                     history.push('/account-dragons');
                 }
             })
-            .catch(error =>alert(error.message));
+            .catch(error => alert(error.message));
     }
 
-    render(){
-        return(
+    render() {
+        return (
             <div>
                 <div>{this.props.dragon.nickname}</div>
                 <DragonAvitar dragon={this.props.dragon}/>
@@ -53,4 +53,5 @@ class PublicDragonRow extends Component{
         )
     }
 }
+
 export default PublicDragonRow;

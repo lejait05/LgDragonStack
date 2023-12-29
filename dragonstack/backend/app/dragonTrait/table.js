@@ -10,9 +10,9 @@ class DragonTraitTable {
                     pool.query('INSERT INTO dragonTrait("traitId", "dragonId") VALUES($1, $2)',
                         [traitId, dragonId],
                         (error, response) => {
-                        if (error) return reject(error);
-                        resolve();
-                    })
+                            if (error) return reject(error);
+                            resolve();
+                        })
                 });
         });
     }

@@ -1,8 +1,7 @@
 import React from 'react';
-// import {render} from 'react-dom';
-import {createRoot} from 'react-dom/client';
+import {render} from 'react-dom';
 import {Provider} from 'react-redux';
-import {Router, Route, Routes, Redirect, Switch} from 'react-router-dom';
+import {Route, redirect, Switch, Router, Routes} from 'react-router-dom';
 import history from "./history";
 import rootReducer from './reducers';
 import Root from './components/Root';
@@ -11,50 +10,36 @@ import PublicDragons from './components/PublicDragons';
 import {configureStore} from '@reduxjs/toolkit';
 import {fetchAuthenticated} from './actions/account';
 import './index.css';
-import {hydrateRoot} from "react-dom/client";
-// import * as PropTypes from "prop-types";
-
-// import Generation from './components/Generation';
-// import Dragon from './components/Dragon';
-// import {createStore, applyMiddleware} from 'redux';
-// import {composeWithDevTools} from 'redux-devtools-extension';
-// import thunkMiddleware from 'redux-thunk';
-
 
 
 const store = configureStore({
     reducer: rootReducer
-});
+})
 
 
 const AuthRoute = props => {
-    if (!store.getState().account.loggedIn){
-        return <Redirect to={{ pathname: '/' }}/>
+    if (!store.getState().account.loggedIn) {
+        return redirect ( '/');
     }
-
     const {element, path} = props;
     return <Route path={path} element={element}/>
 }
-// const container = document.getElementById('root');
-const root =   hydrateRoot(document.getElementById('root'));
+
 
 store.dispatch(fetchAuthenticated())
     .then(() => {
-      root.render(
+        render(
             <Provider store={store}>
                 <Router history={history}>
-                    <Switch>
-                    {/*<Routes>*/}
-                        <Route exact path= '/' element={<Root/>}/>
-                        <AuthRoute path= '/account-dragons' element={<AccountDragons/>}/>
-                        <AuthRoute path= '/public-dragons' element={<PublicDragons/>}/>
-                        </Switch>
-                    {/*</Routes>*/}
+                    {/*<Switch>*/}
+                    <Routes>
+                        <Route  path='/' element={<Root/>}/>
+                        <AuthRoute path='/account-dragons' element={<AccountDragons/>}/>
+                        <AuthRoute path='/public-dragons' element={<PublicDragons/>}/>
+                    {/*</Switch>*/}
+                    </Routes>
                 </Router>
-            </Provider>
-            // document.getElementById('root')
+            </Provider>,
+            document.getElementById('root')
         );
     });
-
-
-

@@ -7,4 +7,4 @@ import spotted from './spotted.png';
 import stocky from './stocky.png';
 import striped from './striped.png';
 
-export { skinny, patchy, plain, slender, sporty, spotted, stocky, striped};
+export {skinny, patchy, plain, slender, sporty, spotted, stocky, striped};

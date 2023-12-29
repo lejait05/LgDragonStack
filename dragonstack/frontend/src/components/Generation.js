@@ -6,37 +6,39 @@ import fetchStates from '../reducers/fetchStates';
 const DEFAULT_GENERATION = {generationId: '', expiration: ''};
 const MINIMUM_DELAY = 3000;
 
-class Generation extends Component{
+class Generation extends Component {
     timer = null;
+
     componentDidMount() {
         this.fetchNextGeneration();
     }
-componentWillUnmount(){
+
+    componentWillUnmount() {
         clearTimeout(this.timer);
-}
-
-
-fetchNextGeneration =() => {
-this.props.fetchGeneration();
-
-let delay = new Date(this.props.generation.expiration).getTime() -
-new Date().getTime();
-if (delay < MINIMUM_DELAY){
-    delay = MINIMUM_DELAY;
-}
-this.timer = setTimeout(()=> this.fetchNextGeneration(), delay);
-}
-render(){
-    console.log('this.props', this.props);
-    const {generation} = this.props;
-
-
-
-    if(generation.status === fetchStates.error){
-        return <div>{generation.message}</div>;
     }
 
-        return(
+
+    fetchNextGeneration = () => {
+        this.props.fetchGeneration();
+
+        let delay = new Date(this.props.generation.expiration).getTime() -
+            new Date().getTime();
+        if (delay < MINIMUM_DELAY) {
+            delay = MINIMUM_DELAY;
+        }
+        this.timer = setTimeout(() => this.fetchNextGeneration(), delay);
+    }
+
+    render() {
+        console.log('this.props', this.props);
+        const {generation} = this.props;
+
+
+        if (generation.status === fetchStates.error) {
+            return <div>{generation.message}</div>;
+        }
+
+        return (
             <div>
                 <h3>Generation {generation.generationId}. Expires on:</h3>
                 <h4>{new Date(generation.expiration).toString()}</h4>
@@ -44,9 +46,10 @@ render(){
         )
     }
 }
-const mapStateToProps = state=>{
+
+const mapStateToProps = state => {
     const generation = state.generation;
-    return{generation};
+    return {generation};
 };
 
 

@@ -1,7 +1,7 @@
 import {fetchFromAccount} from './account';
-import{ACCOUNT_INFO} from './types';
+import {ACCOUNT_INFO} from './types';
 
-export const fetchAccountInfo = () =>  fetchFromAccount({
+export const fetchAccountInfo = () => fetchFromAccount({
     endpoint: 'info',
     options: {credentials: 'include'},
     FETCH_TYPE: ACCOUNT_INFO.FETCH,

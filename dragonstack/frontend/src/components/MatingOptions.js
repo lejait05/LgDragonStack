@@ -5,30 +5,30 @@ import {BACKEND} from "../config";
 import history from "../history";
 
 class MatingOptions extends Component {
-    mate= ({matronDragonId, patronDragonId})=>()=>{
+    mate = ({matronDragonId, patronDragonId}) => () => {
         fetch(`${BACKEND.ADDRESS}/dragon/mate`, {
             method: 'POST',
-            credentials:'include',
+            credentials: 'include',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({matronDragonId, patronDragonId})
-        }).then(response=>response.json())
-            .then(json=>{
+        }).then(response => response.json())
+            .then(json => {
                 alert(json.message)
-                if (json.type !== 'error'){
+                if (json.type !== 'error') {
                     history.push('/account-dragons');
                 }
             })
-            .catch(error=> alert(error.message));
+            .catch(error => alert(error.message));
     }
 
-    render(){
-        return(
+    render() {
+        return (
             <div>
                 <h4> Pick one of your dragons to mate with:</h4>
                 {
-                    this.props.accountDragons.dragons.map(dragon=>{
+                    this.props.accountDragons.dragons.map(dragon => {
                         const {dragonId, generationId, nickname} = dragon;
-                        return(
+                        return (
                             <span key={dragonId}>
                                 <Button onClick={
                                     this.mate({
@@ -49,6 +49,6 @@ class MatingOptions extends Component {
 }
 
 export default connect(
-    ({accountDragons})=> ({accountDragons}),
+    ({accountDragons}) => ({accountDragons}),
     null
 )(MatingOptions);

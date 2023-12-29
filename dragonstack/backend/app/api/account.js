@@ -37,7 +37,7 @@ router.post('/login', (req, res, next) => {
     AccountTable.getAccount({usernameHash: hash(username)})
         .then(({account}) => {
             if (account && account.passwordHash === hash(password)) {
-                const {sessionId} = account
+                const {sessionId} = account;
                 return setSession({username, res, sessionId})
             } else {
                 const error = new Error('Incorrect username/password');

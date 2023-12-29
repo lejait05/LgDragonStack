@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
-import DragonAvitar  from './DragonAvitar';
+import DragonAvitar from './DragonAvitar';
 import {Button} from 'react-bootstrap';
 import {BACKEND} from '../config';
 
-class AccountDragonRow extends Component{
+class AccountDragonRow extends Component {
     state = {
         nickname: this.props.dragon.nickname,
         isPublic: this.props.dragon.isPublic,
@@ -12,22 +12,22 @@ class AccountDragonRow extends Component{
         edit: false
     };
 
-    updateNickname = event =>{
+    updateNickname = event => {
         this.setState({nickname: event.target.value});
     }
-    updateSaleValue = event=>{
+    updateSaleValue = event => {
         this.setState({saleValue: event.target.value});
     }
-    updateSireValue = event=>{
+    updateSireValue = event => {
         this.setState({sireValue: event.target.value});
     }
-    updateIsPublic = event=>{
+    updateIsPublic = event => {
         this.setState({isPublic: event.target.value})
     }
-    toggleEdit =()=>{
+    toggleEdit = () => {
         this.setState({edit: !this.state.edit});
     }
-save =()=>{
+    save = () => {
         fetch(`${BACKEND.ADDRESS}/dragon/update`, {
             method: 'PUT',
             headers: {'Content-Type': 'application/json'},
@@ -39,26 +39,27 @@ save =()=>{
                 sireValue: this.state.sireValue
             })
         }).then(response => response.json())
-            .then(json =>{
-                if (json.type === 'error'){
+            .then(json => {
+                if (json.type === 'error') {
                     alert(json.message);
-                }else {
+                } else {
                     this.toggleEdit();
                 }
             })
-            .catch(error=>alert(error.message));
-}
+            .catch(error => alert(error.message));
+    }
 
 
-    get SaveButton(){
+    get SaveButton() {
         return <Button onClick={this.save}>Save</Button>;
     }
-    get EditButton(){
+
+    get EditButton() {
         return <Button onClick={this.toggleEdit}>Edit</Button>;
     }
 
-    render(){
-        return(
+    render() {
+        return (
             <div>
                 <input type='text'
                        value={this.state.nickname}
@@ -70,34 +71,34 @@ save =()=>{
                 <div>
                     <span>
                             Sale Value: {' '}
-                            <input
+                        <input
                             type='number'
                             disabled={!this.state.edit}
                             value={this.state.saleValue}
                             onChange={this.updateSaleValue}
                             className='account-dragon-row-input'
-                            />
+                        />
                         </span>{' '}
                     <span>
                         Sire Value:{' '}
                         <input
-                        type='number'
-                        disabled={!this.state.sireValue}
-                        onChange={this.updateSireValue}
-                        className='account-dragon-row-input'
+                            type='number'
+                            disabled={!this.state.sireValue}
+                            onChange={this.updateSireValue}
+                            className='account-dragon-row-input'
                         />
                     </span>{' '}
-                        <span>
+                    <span>
                             Public: {' '}
-                            <input
+                        <input
                             type='checkbox'
                             disabled={!this.state.edit}
                             checked={this.state.isPublic}
                             onChange={this.updateIsPublic}
-                            />
+                        />
                         </span>
 
-                            {
+                    {
                         this.state.edit ? this.SaveButton : this.EditButton
                     }
                 </div>
@@ -105,4 +106,5 @@ save =()=>{
         )
     }
 }
+
 export default AccountDragonRow;

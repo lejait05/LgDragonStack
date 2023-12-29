@@ -11,6 +11,7 @@ export const fetchFromAccount = ({
     dispatch({type: FETCH_TYPE});
 
     return fetch(`${BACKEND.ADDRESS}/account/${endpoint}`, options)
+        .then(response => response.json())
         .then(json => {
             if (json.type === 'error') {
                 dispatch({type: ERROR_TYPE, message: json.message});

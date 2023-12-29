@@ -7,24 +7,25 @@ import {BACKEND} from "../config";
 //         generation: payload
 //     };
 // }
-export const fetchGeneration = ()=>dispatch =>{
-    dispatch({type:GENERATION.FETCH});
+export const fetchGeneration = () => dispatch => {
+    dispatch({type: GENERATION.FETCH});
     return fetch(`${BACKEND.ADDRESS}/generation`)
-        .then(response=> response.json())
-        .then(json=>{
-            if (json.type ==='error'){
+        .then(response => response.json())
+        .then(json => {
+            if (json.type === 'error') {
                 dispatch({
                     type: GENERATION.FETCH_ERROR,
-                    message:json.message
+                    message: json.message
                 });
-            }else{
-                dispatch({type: GENERATION.FETCH_SUCCESS,
+            } else {
+                dispatch({
+                    type: GENERATION.FETCH_SUCCESS,
                     generation: json.generation
                 });
             }
         })
-        .catch(error=>dispatch({
-            type:GENERATION.FETCH_ERROR,
+        .catch(error => dispatch({
+            type: GENERATION.FETCH_ERROR,
             message: error.message
         }));
 };

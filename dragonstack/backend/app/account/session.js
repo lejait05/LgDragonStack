@@ -5,16 +5,17 @@ const {hash} = require('./helper');
 const SEPARATOR = '|';
 
 class Session {
-    constructor({username}){
+    constructor({username}) {
         this.username = username;
         this.id = uuid;
     }
-    toString(){
-        const{username, id} = this;
+
+    toString() {
+        const {username, id} = this;
         return Session.sessionString({username, id});
     }
 
-    static parse(sessionString){
+    static parse(sessionString) {
         const sessionData = sessionString.split(SEPARATOR);
         return {
             username: sessionData[0],
@@ -23,19 +24,21 @@ class Session {
         };
     }
 
-    static verify(sessionString){
+    static verify(sessionString) {
         const {username, id, sessionHash} = Session.parse(sessionString);
         const accountData = Session.accountData({username, id});
-        return hash(accountData)=== sessionHash;
+        return hash(accountData) === sessionHash;
     }
-    static  accountData({username, id}){
+
+    static accountData({username, id}) {
         return `${username}${SEPARATOR}${id}`;
     }
 
 
-    static sessionString({username, id}){
+    static sessionString({username, id}) {
         const accountData = Session.accountData({username, id});
         return `${accountData}${SEPARATOR}${hash(accountData)}`;
     }
 }
+
 module.export = Session;

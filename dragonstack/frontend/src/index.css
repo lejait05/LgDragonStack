@@ -1,31 +1,36 @@
-body{
+body {
     text-align: center;
     margin: 10%;
-font-size: 20px;
-    background: linear-gradient(45deg, #C1B19A, white) ;
+    font-size: 20px;
+    background: linear-gradient(45deg, #C1B19A, white);
     font-family: "Comic Sans MS", serif;
 }
-.dragon-avatar-image-wrapper{
+
+.dragon-avatar-image-wrapper {
     display: flex;
     align-items: center;
     justify-content: center;
 }
-.dragon-avatar-image-pattern{
+
+.dragon-avatar-image-pattern {
     position: absolute;
 }
-.dragon-avatar-image-background{
+
+.dragon-avatar-image-background {
     position: absolute;
 }
-.dragon-avatar-image{
+
+.dragon-avatar-image {
     z-index: 0;
 }
 
-.logout-button{
+.logout-button {
     position: absolute;
     right: 30px;
     top: 30px;
 }
-.account-dragon-row-input{
+
+.account-dragon-row-input {
     width: 100px;
     height: 20px;
     margin-right: 15px;

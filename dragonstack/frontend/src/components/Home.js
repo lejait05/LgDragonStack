@@ -7,7 +7,6 @@ import Dragon from './Dragon';
 import AccountInfo from './AccountInfo';
 import {logout} from '../actions/account';
 
-// import AccountDragons from './AccountDragons'
 
 class Home extends Component {
     render() {

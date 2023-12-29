@@ -4,7 +4,7 @@ import fetchStates from "./fetchStates";
 const DEFAULT_ACCOUNT_DRAGONS = {dragons: []};
 
 const accountDragons = (state = DEFAULT_ACCOUNT_DRAGONS, action) => {
-    switch(action.type){
+    switch (action.type) {
         case ACCOUNT_DRAGONS.FETCH:
             return {...state, status: fetchStates.fetching};
         case ACCOUNT_DRAGONS.FETCH_ERROR:
