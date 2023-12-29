@@ -6,3 +6,7 @@ package-lock.json
 node_modules/
 node_modules
 node_modules/.package-lock.json
+package-lock.json
+dragonstack/package-lock.json
+dragonstack/frontend/package-lock.json
+dragonstack/backend/package-lock.json
