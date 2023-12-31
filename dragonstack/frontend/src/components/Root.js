@@ -9,7 +9,7 @@ class Root extends Component {
             this.props.account.loggedIn ? <Home/> : <AuthForm/>
         )
     }
-}
+};
 
 export default connect(
     ({account}) => ({account}),

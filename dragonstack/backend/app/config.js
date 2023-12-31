@@ -7,6 +7,7 @@ const REFRESH_RATE = 5; // units
 
 const STARTING_BALANCE = 50;
 
+
 module.exports = {
     SECONDS,
     MINUTES,

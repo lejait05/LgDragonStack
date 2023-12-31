@@ -1,11 +1,10 @@
 const {Router} = require('express');
 const AccountTable = require('../account/table');
 const AccountDragonTable = require('../accountDragon/table');
-const Session = require('../account/session')
+const Session= require('../account/session');
 const {hash} = require('../account/helper');
 const {setSession, authenticatedAccount} = require('./helper');
 const {getDragonWithTraits} = require('../dragon/helper');
-
 
 const router = new Router();
 
@@ -48,7 +47,6 @@ router.post('/login', (req, res, next) => {
         .then(({message}) => res.json({message}))
         .catch(error => next(error));
 });
-
 
 router.get('/logout', (req, res, next) => {
     const {username} = Session.parse(req.cookies.sessionString);
